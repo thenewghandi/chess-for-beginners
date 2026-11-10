@@ -97,3 +97,4 @@ All tactical puzzles are stored in `data.js` inside the `PUZZLES` array. To add 
 Every time the page loads, `app.js` runs a diagnostic self-check in the browser console. It simulates every move of every opening and confirms that every puzzle FEN and solution is legal according to `chess.js`.
 
 Open your browser's Developer Tools (F12 or Ctrl+Shift+I) to inspect the diagnostic report.
+
