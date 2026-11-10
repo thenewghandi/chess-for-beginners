@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chess from the first move — Repertoire & Tactics for Beginners</title>
+  <meta name="description" content="A single-page, interactive chess repertoire and tactics guide for people learning chess for the first time. Plain-language explanations, no jargon without a definition.">
+
+  <!-- Google Font: Newsreader (Serif) with preconnect -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400..700;1,6..72,400..700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Live region for accessible announcements -->
+  <div id="sr-announcements" class="sr-only" aria-live="polite" aria-atomic="true"></div>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="#top" class="brand" aria-label="Chess from the first move - Return to top">
+        <span class="brand-icon" aria-hidden="true">♔&#xFE0E;</span>
+        <span class="brand-title">Chess from the first move</span>
+      </a>
+
+      <nav aria-label="Primary navigation">
+        <ul class="nav-links">
+          <li><a href="#principles">Principles</a></li>
+          <li><a href="#openings">Openings</a></li>
+          <li><a href="#tactics">Tactics</a></li>
+          <li>
+            <button id="theme-toggle" class="theme-toggle-btn" type="button" aria-label="Toggle dark mode" title="Toggle theme">
+              <span id="theme-icon" aria-hidden="true">☼</span>
+              <span id="theme-text">Theme</span>
+            </button>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top">
+    <!-- Hero / Title Section -->
+    <section class="hero-section">
+      <div class="container hero-content">
+        <h1 class="hero-title">Chess from the first move</h1>
+        <p class="hero-intro">
+          A single-page, interactive chess repertoire and tactics guide for people learning chess for the first time.
+        </p>
+        <div class="hero-meta">
+          <span>Plain-language explanations</span>
+          <span>•</span>
+          <span>No jargon without a definition</span>
+          <span>•</span>
+          <span>Interactive practice boards</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 1. Principles Section -->
+    <section id="principles" class="page-section" aria-labelledby="principles-heading">
+      <div class="container">
+        <div class="section-header">
+          <p class="section-label">Opening strategy fundamentals</p>
+          <h2 id="principles-heading" class="section-title">Five golden opening principles</h2>
+          <p class="section-description">
+            In chess, the opening is the first phase of the game where both players mobilize their pieces. Following these five foundational guidelines will prevent early disasters and guarantee your pieces enter the game harmoniously.
+          </p>
+        </div>
+
+        <div class="principles-list">
+          <article class="principle-item">
+            <div class="principle-num" aria-hidden="true">1</div>
+            <div class="principle-body">
+              <h3>Control the center</h3>
+              <p>
+                The center consists of the four middle squares: <strong>e4, d4, e5, and d5</strong>. Like the high ground on a battlefield, controlling these squares allows your pieces to move rapidly to either side of the board and cramps your opponent’s position.
+              </p>
+              <div class="principle-jargon">
+                <strong>Why it matters:</strong> A knight in the center controls up to 8 squares, but stuck on the rim it controls only 4.
+              </div>
+            </div>
+          </article>
+
+          <article class="principle-item">
+            <div class="principle-num" aria-hidden="true">2</div>
+            <div class="principle-body">
+              <h3>Develop knights and bishops first</h3>
+              <p>
+                <strong>Development</strong> simply means moving your pieces from their starting back-rank squares into active positions where they influence the game. Bring your <em>minor pieces</em> (knights and bishops) into play before your rooks or queen.
+              </p>
+              <div class="principle-jargon">
+                <strong>Minor pieces:</strong> Knights and bishops are worth 3 pawns each. Rooks (5 pawns) and the Queen (9 pawns) are <em>major pieces</em> and join the battle later.
+              </div>
+            </div>
+          </article>
+
+          <article class="principle-item">
+            <div class="principle-num" aria-hidden="true">3</div>
+            <div class="principle-body">
+              <h3>Castle early</h3>
+              <p>
+                <strong>Castling</strong> is a special double-move where your king moves two squares toward a rook, and the rook hops over to stand right beside the king. It achieves two goals in a single turn: it hides your vulnerable king safely behind pawns and brings your rook toward the center.
+              </p>
+              <div class="principle-jargon">
+                <strong>King safety:</strong> An uncastled king stuck in the center of an open board is the number one cause of beginner losses.
+              </div>
+            </div>
+          </article>
+
+          <article class="principle-item">
+            <div class="principle-num" aria-hidden="true">4</div>
+            <div class="principle-body">
+              <h3>Don’t move the same piece twice</h3>
+              <p>
+                In the opening, time is precious. Every move where you repeat a piece without being forced is a <em>wasted tempo</em> (turn), giving your opponent a free move to mobilize another attacker while your army sleeps on the back row.
+              </p>
+              <div class="principle-jargon">
+                <strong>Tempo:</strong> The chess word for time measured in turns. Gaining a tempo means developing with a threat that forces your opponent to react.
+              </div>
+            </div>
+          </article>
+
+          <article class="principle-item">
+            <div class="principle-num" aria-hidden="true">5</div>
+            <div class="principle-body">
+              <h3>Keep the queen home early</h3>
+              <p>
+                The Queen is your most powerful piece, which makes her a tempting weapon for beginner attacks. However, bringing her out early allows your opponent to develop smaller pieces (like knights and bishops) while attacking her, forcing her to run away repeatedly.
+              </p>
+              <div class="principle-jargon">
+                <strong>The rule of thumb:</strong> Develop your knights, develop your bishops, castle your king, and only then find the ideal post for your queen.
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. Openings Section -->
+    <section id="openings" class="page-section" aria-labelledby="openings-heading">
+      <div class="container">
+        <div class="section-header">
+          <p class="section-label">Opening repertoire</p>
+          <h2 id="openings-heading" class="section-title">Playable opening lines with move-by-move ideas</h2>
+          <p class="section-description">
+            Step through each line using the Next and Back buttons. Every single move has an explanation so you understand <em>why</em> each piece moves, not just where it lands.
+          </p>
+        </div>
+
+        <!-- Openings Selector Tabs -->
+        <div class="item-selector-wrapper">
+          <ul id="opening-tabs" class="item-selector-list" role="tablist" aria-label="Select an opening to study">
+            <!-- Rendered dynamically by app.js -->
+          </ul>
+        </div>
+
+        <div class="interactive-layout">
+          <!-- Board Column -->
+          <div class="board-column">
+            <div class="board-wrapper">
+              <div id="opening-board" class="board-container" role="region" aria-label="Interactive opening chess board">
+                <!-- 64 square buttons rendered by app.js -->
+              </div>
+            </div>
+
+            <!-- Controls: Reset / Back / Next / Flip -->
+            <div class="controls-bar">
+              <button id="opening-reset-btn" class="btn btn-subtle" type="button" title="Reset to initial position">
+                ↺ Reset
+              </button>
+              <button id="opening-back-btn" class="btn" type="button" title="Previous move (or Left Arrow)">
+                ← Back
+              </button>
+              <button id="opening-next-btn" class="btn btn-primary" type="button" title="Next move (or Right Arrow)">
+                Next →
+              </button>
+              <button id="opening-flip-btn" class="btn btn-subtle" type="button" title="Flip board orientation">
+                ⇅ Flip
+              </button>
+            </div>
+          </div>
+
+          <!-- Opening Details & Move Explanation Column -->
+          <div class="details-column">
+            <div class="openings-panel">
+              <div class="opening-meta">
+                <h3 id="opening-title" class="opening-heading">Italian Game</h3>
+                <p id="opening-blurb" class="opening-blurb"></p>
+              </div>
+
+              <!-- Move history list -->
+              <div class="move-list-container">
+                <p class="move-list-label">Move sequence (click any move to jump):</p>
+                <div id="opening-moves-grid" class="moves-grid" role="group" aria-label="Move sequence">
+                  <!-- Move pills rendered by app.js -->
+                </div>
+              </div>
+
+              <!-- Move explanation card -->
+              <div class="explanation-card" aria-live="polite">
+                <div id="explanation-header" class="explanation-card-header">Current Move Explanation</div>
+                <p id="explanation-text" class="explanation-card-text">
+                  Press <strong>Next</strong> to begin stepping through this opening line.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. Tactics Section -->
+    <section id="tactics" class="page-section" aria-labelledby="tactics-heading">
+      <div class="container">
+        <div class="section-header">
+          <p class="section-label">Tactical puzzles</p>
+          <h2 id="tactics-heading" class="section-title">Playable tactical patterns</h2>
+          <p class="section-description">
+            Tactics are short sequence of moves that capitalize on an opponent’s mistake to win material or deliver checkmate. Click your piece, then click the destination square to make your move!
+          </p>
+        </div>
+
+        <!-- Puzzle Selector Tabs -->
+        <div class="item-selector-wrapper">
+          <ul id="puzzle-tabs" class="item-selector-list" role="tablist" aria-label="Select a puzzle to solve">
+            <!-- Rendered dynamically by app.js -->
+          </ul>
+        </div>
+
+        <div class="interactive-layout">
+          <!-- Board Column -->
+          <div class="board-column">
+            <div class="board-wrapper">
+              <div id="puzzle-board" class="board-container" role="region" aria-label="Interactive tactical puzzle chess board">
+                <!-- 64 square buttons rendered by app.js -->
+              </div>
+            </div>
+
+            <!-- Puzzle Controls: Reset / Hint -->
+            <div class="controls-bar">
+              <button id="puzzle-reset-btn" class="btn btn-subtle" type="button" title="Reset puzzle to start">
+                ↺ Reset Puzzle
+              </button>
+              <button id="puzzle-hint-btn" class="btn" type="button" title="Show a helpful hint">
+                💡 Show Hint
+              </button>
+            </div>
+          </div>
+
+          <!-- Puzzle Details & Feedback Column -->
+          <div class="details-column">
+            <div class="tactics-panel">
+              <div class="puzzle-meta">
+                <div class="puzzle-title-row">
+                  <h3 id="puzzle-title" class="puzzle-heading">Knight Fork</h3>
+                  <span id="puzzle-status-badge" class="solved-status-badge">Unsolved</span>
+                </div>
+                <p id="puzzle-turn" class="puzzle-turn-indicator">White to move and win.</p>
+              </div>
+
+              <div id="puzzle-feedback" class="puzzle-feedback" role="alert" aria-live="assertive">
+                <!-- Dynamic feedback injected by app.js -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container footer-content">
+      <div class="footer-note">
+        <h3>Understanding board geometry: Files and ranks</h3>
+        <p>
+          The chess board is an 8x8 grid of 64 alternating light and dark squares. The vertical columns running between players are called <strong>files</strong> and are lettered <strong>a through h</strong> from left to right (from White’s perspective). The horizontal rows across the board are called <strong>ranks</strong> and are numbered <strong>1 through 8</strong> from bottom to top.
+        </p>
+        <p>
+          Every square has a unique coordinate formed by its file letter followed by its rank number (such as <strong>e4</strong> or <strong>f7</strong>).
+        </p>
+        <div class="footer-board-primer">
+          <strong>Which side starts at the bottom?</strong> In standard chess diagrams and at the start of any game, <strong>White begins at the bottom on ranks 1 and 2</strong>, while <strong>Black begins at the top on ranks 7 and 8</strong>. White always makes the first move of the game.
+        </div>
+      </div>
+
+      <div class="footer-links">
+        <h3>About this guide</h3>
+        <p>
+          Built for chess beginners with zero frameworks and no runtime build steps. Validated with local chess.js rules engine and rendered using Unicode chess glyphs.
+        </p>
+      </div>
+    </div>
+
+    <div class="container footer-bottom">
+      <span>Chess from the first move &bull; Beginner Repertoire &amp; Tactics Guide</span>
+      <span>Designed with plain HTML, CSS, and JavaScript</span>
+    </div>
+  </footer>
+
+  <!-- Scripts: Vendor Chess Engine, Content Data, Application Logic -->
+  <script src="vendor/chess.js"></script>
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

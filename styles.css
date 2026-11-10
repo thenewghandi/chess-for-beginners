@@ -1,0 +1,896 @@
+/* ==========================================================================
+   Chess from the first move - Stylesheet
+   Typography: Newsreader (Google Fonts) with Georgia fallback
+   Palette: Slate Blue & Pale Grey boards, Amber accents, Cool Slate neutrals
+   Accessibility: Visible focus states, WCAG contrast, prefers-reduced-motion
+   ========================================================================== */
+
+:root {
+  /* Color Palette - Light Mode */
+  --bg-page: #f6f8fa;
+  --bg-surface: #ffffff;
+  --bg-surface-elevated: #ffffff;
+  --bg-subtle: #edf2f7;
+  
+  --text-primary: #1a2332;
+  --text-secondary: #4a5568;
+  --text-muted: #718096;
+  
+  --border-subtle: #e2e8f0;
+  --border-strong: #cbd5e1;
+  
+  /* Chess Board Colors: Slate Blue & Pale Grey */
+  --square-light: #e6ecf0;
+  --square-dark: #4b6b8b;
+  --square-light-coord: #718096;
+  --square-dark-coord: #cbd5e1;
+  
+  /* Highlights & Accents: Amber */
+  --highlight-amber: rgba(245, 158, 11, 0.42);
+  --highlight-amber-border: #d97706;
+  --highlight-selected: rgba(217, 119, 6, 0.6);
+  --target-dot: rgba(217, 119, 6, 0.45);
+  --target-capture: rgba(220, 38, 38, 0.35);
+  
+  /* Status Colors */
+  --status-success-bg: #ecfdf5;
+  --status-success-border: #a7f3d0;
+  --status-success-text: #065f46;
+  
+  --status-warn-bg: #fffbeb;
+  --status-warn-border: #fde68a;
+  --status-warn-text: #92400e;
+  
+  --status-info-bg: #eff6ff;
+  --status-info-border: #bfdbfe;
+  --status-info-text: #1e40af;
+
+  /* Piece Styling */
+  --piece-white: #ffffff;
+  --piece-black: #111827;
+  --piece-shadow-white: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.7)) drop-shadow(0 0 1px rgba(0, 0, 0, 0.8));
+  --piece-shadow-black: drop-shadow(0 1px 1px rgba(255, 255, 255, 0.35));
+
+  /* Layout & Fonts */
+  --font-serif: 'Newsreader', Georgia, 'Times New Roman', serif;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.08), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -4px rgba(0, 0, 0, 0.04);
+}
+
+[data-theme="dark"] {
+  --bg-page: #0c121e;
+  --bg-surface: #151f30;
+  --bg-surface-elevated: #1a273c;
+  --bg-subtle: #1f2e46;
+  
+  --text-primary: #f1f5f9;
+  --text-secondary: #cbd5e1;
+  --text-muted: #94a3b8;
+  
+  --border-subtle: #24354f;
+  --border-strong: #334a6d;
+  
+  /* Board in dark mode maintains slate blue / pale grey contrast */
+  --square-light: #d6dde4;
+  --square-dark: #3a546e;
+  --square-light-coord: #5a6b7c;
+  --square-dark-coord: #a6b8ca;
+  
+  --highlight-amber: rgba(245, 158, 11, 0.48);
+  --highlight-amber-border: #f59e0b;
+  --highlight-selected: rgba(245, 158, 11, 0.7);
+  --target-dot: rgba(245, 158, 11, 0.55);
+  --target-capture: rgba(239, 68, 68, 0.45);
+  
+  --status-success-bg: rgba(6, 95, 70, 0.25);
+  --status-success-border: #059669;
+  --status-success-text: #6ee7b7;
+  
+  --status-warn-bg: rgba(146, 64, 14, 0.25);
+  --status-warn-border: #d97706;
+  --status-warn-text: #fcd34d;
+  
+  --status-info-bg: rgba(30, 64, 175, 0.25);
+  --status-info-border: #3b82f6;
+  --status-info-text: #93c5fd;
+
+  --piece-white: #ffffff;
+  --piece-black: #0a0f18;
+  --piece-shadow-white: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.9));
+  --piece-shadow-black: drop-shadow(0 0 1.5px rgba(241, 245, 249, 0.85));
+}
+
+/* ==========================================================================
+   Base & Reset
+   ========================================================================== */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-family: var(--font-serif);
+  font-size: 18px;
+  line-height: 1.6;
+  color: var(--text-primary);
+  background-color: var(--bg-page);
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Focus States */
+:focus-visible {
+  outline: 3px solid #d97706;
+  outline-offset: 2px;
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Container */
+.container {
+  width: 100%;
+  max-width: 1120px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: clamp(1rem, 4vw, 2rem);
+  padding-right: clamp(1rem, 4vw, 2rem);
+}
+
+/* ==========================================================================
+   Header & Navigation
+   ========================================================================== */
+
+.site-header {
+  border-bottom: 1px solid var(--border-subtle);
+  background: var(--bg-surface);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  backdrop-filter: blur(8px);
+}
+
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+.brand {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  text-decoration: none;
+  color: var(--text-primary);
+}
+
+.brand-icon {
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+.brand-title {
+  font-size: clamp(1.2rem, 3vw, 1.45rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: clamp(0.75rem, 2vw, 1.5rem);
+  list-style: none;
+}
+
+.nav-links a {
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 500;
+  padding: 0.35rem 0.6rem;
+  border-radius: var(--radius-sm);
+  transition: color 0.15s ease, background 0.15s ease;
+}
+
+.nav-links a:hover {
+  color: var(--text-primary);
+  background: var(--bg-subtle);
+}
+
+.theme-toggle-btn {
+  background: var(--bg-subtle);
+  color: var(--text-primary);
+  border: 1px solid var(--border-subtle);
+  padding: 0.4rem 0.75rem;
+  border-radius: var(--radius-sm);
+  font-family: inherit;
+  font-size: 0.9rem;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.theme-toggle-btn:hover {
+  background: var(--border-subtle);
+}
+
+/* ==========================================================================
+   Hero Section
+   ========================================================================== */
+
+.hero-section {
+  padding: clamp(2.5rem, 6vw, 4rem) 0 clamp(1.5rem, 4vw, 2.5rem);
+  border-bottom: 1px solid var(--border-subtle);
+  background: linear-gradient(180deg, var(--bg-surface) 0%, var(--bg-page) 100%);
+}
+
+.hero-content {
+  max-width: 780px;
+}
+
+.hero-title {
+  font-size: clamp(2.2rem, 5.5vw, 3.4rem);
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.025em;
+  margin-bottom: 1rem;
+}
+
+.hero-intro {
+  font-size: clamp(1.05rem, 2.4vw, 1.25rem);
+  color: var(--text-secondary);
+  line-height: 1.55;
+  margin-bottom: 1.5rem;
+}
+
+.hero-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+/* ==========================================================================
+   Section Layouts
+   ========================================================================== */
+
+.page-section {
+  padding: clamp(2.5rem, 6vw, 4rem) 0;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.section-header {
+  margin-bottom: 2rem;
+  max-width: 720px;
+}
+
+.section-label {
+  font-size: 0.95rem;
+  font-style: italic;
+  color: var(--text-muted);
+  margin-bottom: 0.25rem;
+}
+
+.section-title {
+  font-size: clamp(1.6rem, 3.5vw, 2.2rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+  margin-bottom: 0.5rem;
+}
+
+.section-description {
+  font-size: 1.05rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+/* ==========================================================================
+   Principles Section (Five Opening Rules)
+   ========================================================================== */
+
+.principles-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  max-width: 860px;
+}
+
+.principle-item {
+  display: grid;
+  grid-template-columns: 48px 1fr;
+  gap: 1.25rem;
+  padding: 1.25rem 1.5rem;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.15s ease, border-color 0.15s ease;
+}
+
+.principle-item:hover {
+  border-color: var(--border-strong);
+}
+
+.principle-num {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--bg-subtle);
+}
+
+.principle-body h3 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 0.35rem;
+  color: var(--text-primary);
+}
+
+.principle-body p {
+  color: var(--text-secondary);
+  font-size: 1rem;
+  line-height: 1.55;
+}
+
+.principle-jargon {
+  margin-top: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  background: var(--bg-subtle);
+  border-radius: var(--radius-sm);
+  font-size: 0.88rem;
+  color: var(--text-muted);
+}
+
+.principle-jargon strong {
+  color: var(--text-primary);
+}
+
+/* ==========================================================================
+   Interactive Chess Board
+   ========================================================================== */
+
+.board-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 460px;
+  margin: 0 auto;
+}
+
+.board-container {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  grid-template-rows: repeat(8, 1fr);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  box-shadow: var(--shadow-lg), 0 0 0 1px var(--border-strong);
+  user-select: none;
+  background: var(--square-dark);
+}
+
+.board-square {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  background-color: var(--square-light);
+  font-family: inherit;
+  font-size: clamp(1.8rem, 5.5vw, 2.7rem);
+  line-height: 1;
+  transition: background-color 0.1s ease;
+}
+
+.board-square.square-dark {
+  background-color: var(--square-dark);
+}
+
+/* Move Highlights (Amber) */
+.board-square.highlight-last-move {
+  background-color: var(--highlight-amber) !important;
+}
+
+.board-square.highlight-selected {
+  background-color: var(--highlight-selected) !important;
+  box-shadow: inset 0 0 0 3px var(--highlight-amber-border);
+}
+
+/* Legal Move Target Indicators */
+.board-square.is-target-move::after {
+  content: '';
+  position: absolute;
+  width: 28%;
+  height: 28%;
+  border-radius: 50%;
+  background-color: var(--target-dot);
+  pointer-events: none;
+}
+
+.board-square.is-target-capture::after {
+  content: '';
+  position: absolute;
+  inset: 6%;
+  border: 3px solid var(--target-capture);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+/* Coordinate Labels on Board Edges */
+.coord-rank,
+.coord-file {
+  position: absolute;
+  font-size: 0.65rem;
+  font-weight: 700;
+  pointer-events: none;
+  user-select: none;
+  line-height: 1;
+  opacity: 0.85;
+}
+
+.coord-rank {
+  top: 3px;
+  left: 4px;
+}
+
+.coord-file {
+  bottom: 3px;
+  right: 4px;
+}
+
+.square-light .coord-rank,
+.square-light .coord-file {
+  color: var(--square-light-coord);
+}
+
+.square-dark .coord-rank,
+.square-dark .coord-file {
+  color: var(--square-dark-coord);
+}
+
+/* Piece Glyphs */
+.piece-glyph {
+  position: relative;
+  z-index: 1;
+  pointer-events: none;
+  display: inline-block;
+  transform: translateY(-2%);
+}
+
+.piece-white {
+  color: var(--piece-white);
+  filter: var(--piece-shadow-white);
+}
+
+.piece-black {
+  color: var(--piece-black);
+  filter: var(--piece-shadow-black);
+}
+
+/* ==========================================================================
+   Interactive Layouts (Openings & Tactics)
+   ========================================================================== */
+
+.interactive-layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  align-items: start;
+}
+
+@media (min-width: 860px) {
+  .interactive-layout {
+    grid-template-columns: minmax(320px, 460px) 1fr;
+    gap: 2.5rem;
+  }
+}
+
+/* Tabs & Selectors */
+.item-selector-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+  list-style: none;
+}
+
+.selector-tab {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 500;
+  padding: 0.45rem 0.9rem;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  transition: all 0.15s ease;
+}
+
+.selector-tab:hover {
+  color: var(--text-primary);
+  border-color: var(--border-strong);
+}
+
+.selector-tab.active {
+  background: var(--bg-subtle);
+  border-color: #d97706;
+  color: var(--text-primary);
+  font-weight: 600;
+  box-shadow: 0 0 0 1px #d97706;
+}
+
+.badge-tag {
+  font-size: 0.75rem;
+  padding: 0.15rem 0.4rem;
+  border-radius: 4px;
+  background: var(--bg-page);
+  color: var(--text-muted);
+}
+
+.selector-tab.active .badge-tag {
+  background: #fde68a;
+  color: #92400e;
+}
+
+[data-theme="dark"] .selector-tab.active .badge-tag {
+  background: #78350f;
+  color: #fef3c7;
+}
+
+/* Control Buttons (Reset / Back / Next / Hint) */
+.controls-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-top: 1rem;
+  flex-wrap: wrap;
+}
+
+.btn {
+  background: var(--bg-surface);
+  color: var(--text-primary);
+  border: 1px solid var(--border-strong);
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 600;
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  transition: background 0.15s ease, border-color 0.15s ease, opacity 0.15s ease;
+}
+
+.btn:hover:not(:disabled) {
+  background: var(--bg-subtle);
+}
+
+.btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.btn-primary {
+  background: #2563eb;
+  color: #ffffff;
+  border-color: #1d4ed8;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: #1d4ed8;
+}
+
+.btn-subtle {
+  border-color: var(--border-subtle);
+  color: var(--text-secondary);
+}
+
+/* ==========================================================================
+   Openings Panel
+   ========================================================================== */
+
+.openings-panel {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 1.5rem;
+  box-shadow: var(--shadow-sm);
+}
+
+.opening-meta {
+  margin-bottom: 1.25rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.opening-heading {
+  font-size: 1.45rem;
+  font-weight: 700;
+  margin-bottom: 0.25rem;
+}
+
+.opening-blurb {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.move-list-container {
+  margin-bottom: 1.25rem;
+}
+
+.move-list-label {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  font-style: italic;
+  margin-bottom: 0.5rem;
+}
+
+.moves-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  padding: 0.6rem;
+  background: var(--bg-subtle);
+  border-radius: var(--radius-sm);
+  min-height: 48px;
+  align-items: center;
+}
+
+.move-pill {
+  border: 1px solid var(--border-subtle);
+  background: var(--bg-surface);
+  color: var(--text-secondary);
+  font-family: inherit;
+  font-size: 0.9rem;
+  padding: 0.25rem 0.55rem;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all 0.12s ease;
+}
+
+.move-pill:hover {
+  border-color: var(--border-strong);
+  color: var(--text-primary);
+}
+
+.move-pill.current-move {
+  background: #f59e0b;
+  border-color: #d97706;
+  color: #1a2332;
+  font-weight: 700;
+}
+
+/* Move Explanation Card */
+.explanation-card {
+  padding: 1rem 1.25rem;
+  border-radius: var(--radius-sm);
+  background: var(--bg-subtle);
+  border-left: 4px solid #d97706;
+  min-height: 80px;
+}
+
+.explanation-card-header {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  margin-bottom: 0.25rem;
+}
+
+.explanation-card-text {
+  font-size: 1.05rem;
+  color: var(--text-primary);
+  line-height: 1.5;
+}
+
+/* ==========================================================================
+   Tactics Section
+   ========================================================================== */
+
+.tactics-panel {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 1.5rem;
+  box-shadow: var(--shadow-sm);
+}
+
+.puzzle-meta {
+  margin-bottom: 1.25rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.puzzle-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-bottom: 0.25rem;
+}
+
+.puzzle-heading {
+  font-size: 1.45rem;
+  font-weight: 700;
+}
+
+.solved-status-badge {
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  background: var(--bg-subtle);
+  color: var(--text-muted);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.solved-status-badge.is-solved {
+  background: var(--status-success-bg);
+  color: var(--status-success-text);
+  border: 1px solid var(--status-success-border);
+}
+
+.puzzle-turn-indicator {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  font-style: italic;
+}
+
+/* Feedback Box */
+.puzzle-feedback {
+  margin-top: 1rem;
+  padding: 1rem 1.25rem;
+  border-radius: var(--radius-sm);
+  display: none;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.puzzle-feedback.show {
+  display: block;
+}
+
+.puzzle-feedback.feedback-success {
+  background: var(--status-success-bg);
+  border: 1px solid var(--status-success-border);
+  color: var(--status-success-text);
+}
+
+.puzzle-feedback.feedback-error {
+  background: var(--status-warn-bg);
+  border: 1px solid var(--status-warn-border);
+  color: var(--status-warn-text);
+}
+
+.puzzle-feedback.feedback-hint {
+  background: var(--status-info-bg);
+  border: 1px solid var(--status-info-border);
+  color: var(--status-info-text);
+}
+
+.puzzle-feedback strong {
+  display: block;
+  font-size: 1.05rem;
+  margin-bottom: 0.25rem;
+}
+
+/* ==========================================================================
+   Footer
+   ========================================================================== */
+
+.site-footer {
+  margin-top: auto;
+  background: var(--bg-surface);
+  border-top: 1px solid var(--border-subtle);
+  padding: 3rem 0 2.5rem;
+  color: var(--text-secondary);
+}
+
+.footer-content {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+}
+
+@media (min-width: 768px) {
+  .footer-content {
+    grid-template-columns: 2fr 1fr;
+  }
+}
+
+.footer-note h3 {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+}
+
+.footer-note p {
+  font-size: 0.98rem;
+  line-height: 1.6;
+  margin-bottom: 0.75rem;
+}
+
+.footer-board-primer {
+  padding: 1rem;
+  background: var(--bg-subtle);
+  border-radius: var(--radius-sm);
+  font-size: 0.9rem;
+  border-left: 3px solid #4b6b8b;
+}
+
+.footer-bottom {
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border-subtle);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+/* ==========================================================================
+   Screen Reader Utility
+   ========================================================================== */
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
